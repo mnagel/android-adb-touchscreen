@@ -5,14 +5,14 @@ if (isset($_GET['s'])) {
     header('Content-Type: image/png');
     header("Cache-Control: no-cache, must-revalidate");
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-    passthru('./adb shell screencap -p | perl -pe \'s/\x0D\x0A/\x0A/g\'');
+    passthru('adb shell screencap -p');
     exit;
 } elseif (isset($_GET['i'])) {
     // input send
     header("Cache-Control: no-cache, must-revalidate");
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     if (preg_match('/^(swipe|tap|text|keyevent|trackball)/', $_GET['i'])) {
-        passthru('./adb shell input ' . $_GET['i']);
+        passthru('adb shell input ' . $_GET['i']);
     }
     exit;
 }
@@ -118,6 +118,8 @@ if (isset($_GET['s'])) {
      * @param {String} text
      */
     function trigger(text) {
+
+        console.log(text);
         if (waiting) {
             triggerQueue.push(text);
             return;
